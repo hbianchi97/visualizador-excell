@@ -13,7 +13,31 @@ export default function FileUpload({ onDataLoaded }) {
         setLoading(true);
         try {
             const data = await parseExcel(file);
-            onDataLoaded(data);
+            console.log("Parsed Data:", data); // Debugging
+
+            // Mapping definitions based on user input
+            // C: Cidade, D: Bairro, E: Endereço, F: Preço, G: Avaliação, H: Desconto, K: Link
+            const mappedData = data.map(row => ({
+                'Cidade': row['C'],
+                'Bairro': row['D'],
+                'Endereço': row['E'],
+                'Preço': row['F'],
+                'Valor de Avaliação': row['G'],
+                'Desconto': row['H'],
+                'Link de acesso': row['K']
+            })).filter(row => {
+                // Filter out empty rows or header rows
+                // If "Preço" contains the word "Preço", it's a header row
+                if (row['Preço'] && row['Preço'].toString().includes('Preço')) return false;
+                // Filter out metadata rows (Line 1 usually has empty fields or just title)
+                if (!row['Preço']) return false; 
+                // If critical fields are missing, skip
+                if (!row['Link de acesso']) return false;
+                return true;
+            });
+
+            console.log("Mapped Data:", mappedData);
+            onDataLoaded(mappedData);
         } catch (err) {
             console.error(err);
             alert('Error parsing file');
@@ -28,7 +52,6 @@ export default function FileUpload({ onDataLoaded }) {
                 <span>Upload Excel File</span>
                 <input
                     type="file"
-                    accept=".xlsx, .xls"
                     onChange={handleFile}
                     className={styles.input}
                 />

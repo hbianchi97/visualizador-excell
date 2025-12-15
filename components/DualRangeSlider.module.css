@@ -1,0 +1,85 @@
+.container {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.slider {
+    position: relative;
+    width: 100%;
+}
+
+.slider__track,
+.slider__range {
+    position: absolute;
+    border-radius: 3px;
+    height: 5px;
+}
+
+.slider__track {
+    background-color: #ced4da;
+    width: 100%;
+    z-index: 1;
+}
+
+.slider__range {
+    background-color: #0070f3;
+    /* Primary color */
+    z-index: 2;
+}
+
+/* The thumb inputs */
+.thumb {
+    pointer-events: none;
+    position: absolute;
+    height: 0;
+    width: 100%;
+    outline: none;
+    z-index: 3;
+    /* Above track */
+}
+
+/* Webkit Thumb */
+.thumb::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    pointer-events: all;
+    /* Important! */
+    height: 18px;
+    width: 18px;
+    border-radius: 50%;
+    background-color: #f1f5f7;
+    border: 2px solid #0070f3;
+    box-shadow: 0 0 1px 1px #ced4da;
+    cursor: pointer;
+    margin-top: 2px;
+    /* Center alignment manual tweak */
+}
+
+/* Firefox Thumb */
+.thumb::-moz-range-thumb {
+    -webkit-appearance: none;
+    pointer-events: all;
+    height: 18px;
+    width: 18px;
+    border-radius: 50%;
+    background-color: #f1f5f7;
+    border: 2px solid #0070f3;
+    box-shadow: 0 0 1px 1px #ced4da;
+    cursor: pointer;
+}
+
+.values {
+    position: absolute;
+    bottom: -20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #666;
+    font-weight: 500;
+}

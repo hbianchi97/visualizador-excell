@@ -1,35 +1,141 @@
 .page {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  background-color: #fafafa;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 .header {
-  height: 80px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 0 40px;
-  background: #fff;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
   position: sticky;
   top: 0;
   z-index: 100;
+  border-bottom: 1px solid #eaeaea;
 }
 
 .logo {
   font-size: 1.5rem;
-  font-weight: 800;
-  letter-spacing: -0.5px;
+  font-weight: 700;
+  margin: 0;
+  color: #111;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+  background: #f5f5f5;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.iconBtn {
+  background: none;
+  border: none;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #666;
+  transition: all 0.2s;
+}
+
+.iconBtn:hover {
+  background: #fff;
+  color: #000;
+}
+
+.active {
+  background: #fff;
+  color: #0070f3;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .main {
-  flex: 1;
-  padding: 40px;
+  padding: 2rem;
   max-width: 1400px;
   margin: 0 auto;
-  width: 100%;
 }
+
+.filters {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  /* Increased padding bottom to accommodate slider labels */
+  padding: 24px 24px 36px 24px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filterActions {
+  display: flex;
+  align-items: flex-end;
+  height: 60px;
+  /* Align with inputs */
+  padding-bottom: 4px;
+}
+
+.filterLabel {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #444;
+}
+
+.input,
+.select {
+  padding: 10px 16px;
+  border: 1px solid #eaeaea;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  min-width: 160px;
+  max-width: 250px;
+  /* Constrain width */
+  background-color: white;
+  cursor: pointer;
+  text-overflow: ellipsis;
+  /* Fallback for browsers that support it */
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.input:focus,
+.select:focus {
+  outline: none;
+  border-color: #0070f3;
+  box-shadow: 0 0 0 2px rgba(0, 112, 243, 0.1);
+}
+
+.applyBtn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  background-color: #0070f3;
+  color: white;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.2s;
+  height: 42px;
+  /* Match input height roughly */
+}
+
+.applyBtn:hover {
+  background-color: #0060df;
+}
+
 
 .uploadSection {
   display: flex;
@@ -42,18 +148,16 @@
 
 .heroTitle {
   font-size: 2.5rem;
-  font-weight: 800;
-  margin-bottom: 16px;
-  background: linear-gradient(180deg, #111, #444);
-  background-clip: text;
+  margin-bottom: 1rem;
+  background: linear-gradient(45deg, #111, #444);
   -webkit-background-clip: text;
-  color: transparent;
+  -webkit-text-fill-color: transparent;
 }
 
 .heroText {
-  font-size: 1.1rem;
   color: #666;
-  margin-bottom: 32px;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
 }
 
 .grid {
@@ -70,36 +174,19 @@
   margin: 0 auto;
 }
 
-.controls {
-  display: flex;
-  gap: 8px;
-}
-
-.iconBtn {
-  background: transparent;
-  border: 1px solid #eee;
+.loadMoreBtn {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: #0070f3;
+  color: white;
+  border: none;
   border-radius: 8px;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   cursor: pointer;
-  color: #666;
-  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(0, 112, 243, 0.2);
+  transition: transform 0.2s;
 }
 
-.iconBtn:hover {
-  border-color: #ddd;
-  background: #f5f5f5;
-}
-
-.active {
-  background: #111;
-  color: #fff;
-  border-color: #111;
-}
-
-.active:hover {
-  background: #333;
+.loadMoreBtn:hover {
+  transform: scale(1.05);
 }

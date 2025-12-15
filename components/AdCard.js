@@ -1,4 +1,5 @@
 'use client';
+import { parseBRL } from '@/utils/currency';
 import { useState, useEffect } from 'react';
 import styles from './AdCard.module.css';
 import { ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
@@ -18,29 +19,25 @@ export default function AdCard({ data }) {
     const link = data['Link de acesso'] || '';
 
     // Format currency
+    // Format currency (Standard R$ 10.000,00)
+    // Format currency (BRL Standard: 1.000,00)
+    // Format currency (BRL Standard: 1.000,00)
     const formatMoney = (val) => {
-        return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(val);
+        const numericVal = parseBRL(val);
+        return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 20 }).format(numericVal);
     };
 
     // Format discount: remove decimals and add %
     const formatDiscount = (val) => {
-        // Assuming val is a number like 0.4 or 40. 
-        // If it's a decimal < 1 (e.g. 0.45 for 45%), multiply by 100? 
-        // Or if it's already 45, just round.
-        // Let's assume the user data might be mixed, but typically Excel "Percentage" style is 0.xx.
-        // However, user said "excluísse a casa decimal", implying it might have decimals.
-        // Let's just treat it as a number found in the cell.
-        if (typeof val === 'number') {
-            // Heuristic: if < 1, might be partial. But safely, just display as is integer.
-            // Actually, if it's 0.45, showing "0%" is wrong.
-            // Let's display Math.round(val * 100) if it looks like a ratio, or Math.round(val) if it looks like a whole number?
-            // Safest: Just remove decimals from whatever number it is.
-            // User said: "Na informação de desconto gostaria que adicionasse "%" ao final e excluísse a casa decimal."
-            // Example: 45.5 -> 45%. 0.45 -> 0%?
-            // I will assume the raw value is what they want rounded.
-            return `${Math.floor(val)}%`;
+        let numVal = val;
+        if (typeof val === 'string') {
+            numVal = parseFloat(val);
         }
-        return val;
+
+        if (typeof numVal === 'number' && !isNaN(numVal)) {
+            return `${Math.floor(numVal)}%`;
+        }
+        return val ? `${val}%` : '';
     };
 
     useEffect(() => {
