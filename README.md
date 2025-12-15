@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Spreadsheet Visualizer 📊
 
-## Getting Started
+> **"Transformando planilhas complexas em oportunidades claras."**
 
-First, run the development server:
+Este projeto nasceu de uma necessidade real: ajudar minha mãe a navegar pelas complexas e densas listas de imóveis de leilão da Caixa Econômica Federal. O que antes era uma planilha de Excel interminável e difícil de ler, agora é uma interface visual, limpa e intuitiva.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+![Spreadsheet Visualizer Preview](https://via.placeholder.com/800x400?text=Preview+da+Aplicacao)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎯 O Problema
+As planilhas de leilão (especialmente da Caixa) contêm milhares de linhas, dados desformatados e colunas misturadas. Para quem busca um imóvel, filtrar por **Cidade**, **Bairro** ou **Preço** nessas listas é uma tarefa exaustiva e propensa a erros.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 💡 A Solução
+O **Spreadsheet Visualizer** é uma aplicação web moderna que aceita o arquivo original (`.xlsx`, `.xls` ou `.csv`) e o transforma instantaneamente em um catálogo de cartões interativos.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Funcionalidades Principais:
+- **Filtragem Inteligente**:
+  - Selecione a **Cidade**, e o sistema automaticamente:
+    - Filtra a lista de imóveis.
+    - Libera apenas os **Bairros** existentes naquela cidade.
+    - Ajusta os **Sliders de Preço** para o mínimo e máximo da região (nada de filtrar de R$0 a R$10 milhões se os imóveis da cidade custam entre R$150k e R$300k).
+- **Leitura Robusta**: Lógica avançada para ignorar linhas de cabeçalho inúteis (metadados) e focar apenas nos dados reais.
+- **Visualização Clara**:
+  - Preços formatados em Real (R$ 150.000,00).
+  - Descontos destacados em vermelho (ex: **40% OFF**).
+  - Preview de imagens e link direto para o edital.
+- **Layout Responsivo**: Design limpo que não quebra mesmo com nomes de cidades gigantescos.
 
-## Learn More
+## 🚀 Como Usar (Testes e Validação)
 
-To learn more about Next.js, take a look at the following resources:
+### Pré-requisitos
+- Node.js instalado.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Passo a Passo
+1.  **Instalação**:
+    ```bash
+    npm install
+    ```
+2.  **Rodar o Projeto**:
+    ```bash
+    npm run dev
+    ```
+3.  **Acessar**:
+    Abra `http://localhost:3001` no seu navegador.
+4.  **Carregar Arquivo**:
+    Arraste sua planilha (ex: `Lista_imoveis_RJ.csv`) para a área de upload.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🛠️ Tecnologias Utilizadas
+- **Next.js 14**: Framework React para performance e renderização.
+- **XLSX / SheetJS**: Para processamento robusto de arquivos Excel e CSV.
+- **CSS Modules**: Estilização modular e segura.
+- **Lucide React**: Ícones leves e consistentes.
 
-## Deploy on Vercel
+## ❤️ Dedicatória
+Projeto desenvolvido com carinho para simplificar a vida de quem investe tempo buscando o imóvel dos sonhos em meio a dados brutos.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+*Desenvolvido em 2025.*
