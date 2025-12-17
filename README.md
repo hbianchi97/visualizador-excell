@@ -4,8 +4,6 @@
 
 Este projeto nasceu de uma necessidade real: ajudar minha mãe a navegar pelas complexas e densas listas de imóveis de leilão da Caixa Econômica Federal. O que antes era uma planilha de Excel interminável e difícil de ler, agora é uma interface visual, limpa e intuitiva.
 
-![Spreadsheet Visualizer Preview](https://via.placeholder.com/800x400?text=Preview+da+Aplicacao)
-
 ## 🎯 O Problema
 As planilhas de leilão (especialmente da Caixa) contêm milhares de linhas, dados desformatados e colunas misturadas. Para quem busca um imóvel, filtrar por **Cidade**, **Bairro** ou **Preço** nessas listas é uma tarefa exaustiva e propensa a erros.
 
@@ -40,7 +38,7 @@ O **Spreadsheet Visualizer** é uma aplicação web moderna que aceita o arquivo
     npm run dev
     ```
 3.  **Acessar**:
-    Abra `http://localhost:3001` no seu navegador.
+    Abra `http://localhost:3000` no seu navegador.
 4.  **Carregar Arquivo**:
     Arraste sua planilha (ex: `Lista_imoveis_RJ.csv`) para a área de upload.
 
