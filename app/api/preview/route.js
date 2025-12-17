@@ -33,8 +33,7 @@ export async function GET(request) {
         const twitterImage = $('meta[name="twitter:image"]').attr('content');
         if (twitterImage && !images.includes(twitterImage)) images.push(twitterImage);
 
-        // 3. Product/Gallery Images often in specific meta or json-ld, but basic img tags as fallback
-        // Filter for reasonably likely content images (exclude common icons)
+        // 3. Product/Gallery Images
         $('img').each((i, el) => {
             if (images.length > 8) return false;
             const src = $(el).attr('src');
@@ -47,9 +46,10 @@ export async function GET(request) {
                 return;
             }
 
-            // Basic filter against logo/icon names
+            // Enhanced filter against logo/icon names and common UI elements
             const lower = absoluteSrc.toLowerCase();
-            if (lower.includes('logo') || lower.includes('icon') || lower.includes('svg')) {
+            const invalidTerms = ['logo', 'icon', 'svg', 'print', 'btn', 'button', 'fale', 'voltar', 'selo'];
+            if (invalidTerms.some(term => lower.includes(term))) {
                 return;
             }
 
@@ -58,7 +58,38 @@ export async function GET(request) {
             }
         });
 
-        return NextResponse.json({ images });
+        // 4. Extract Data (Price, AP, AT) from text content
+        const pageText = $('body').text();
+
+        // Extract Price (Valor mínimo de venda)
+        // Example: "Valor mínimo de venda: R$ 376.468,66"
+        let price = null;
+        const priceMatch = pageText.match(/Valor m[íi]nimo de venda:\s*R\$\s*([\d.,]+)/i);
+        if (priceMatch && priceMatch[1]) {
+            // Keep it as string or number? Frontend expects number for formatting usually, 
+            // but the scrape result effectively gives a formatted string minus the "R$".
+            // Let's return the raw number to be safe for re-formatting
+            const numericString = priceMatch[1].replace(/\./g, '').replace(',', '.');
+            price = parseFloat(numericString);
+        }
+
+        // Extract Private Area (Área privativa)
+        // Example: "Área privativa = 356,53m2"
+        let privateArea = null;
+        const apMatch = pageText.match(/Área privativa\s*=\s*([\d.,]+)\s*m2/i);
+        if (apMatch && apMatch[1]) {
+            privateArea = apMatch[1] + "m²";
+        }
+
+        // Extract Land Area (Área do terreno)
+        // Example: "Área do terreno = 1.200,00m2"
+        let landArea = null;
+        const atMatch = pageText.match(/Área do terreno\s*=\s*([\d.,]+)\s*m2/i);
+        if (atMatch && atMatch[1]) {
+            landArea = atMatch[1] + "m²";
+        }
+
+        return NextResponse.json({ images, price, privateArea, landArea });
 
     } catch (error) {
         console.error('Error scraping:', error);

@@ -9,11 +9,14 @@ export default function AdCard({ data }) {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [loadingImages, setLoadingImages] = useState(false);
 
+    const [dynamicData, setDynamicData] = useState(null);
+
     // Extract data with fallback for keys
     const city = data['Cidade'] || '';
     const district = data['Bairro'] || '';
     const address = data['Endereço'] || '';
-    const price = data['Preço'] || 0;
+    // Use dynamic price if available, otherwise fallback to CSV price
+    const price = dynamicData?.price || data['Preço'] || 0;
     const valuation = data['Valor de Avaliação'] || 0;
     const discount = data['Desconto'] || 0;
     const link = data['Link de acesso'] || '';
@@ -24,7 +27,7 @@ export default function AdCard({ data }) {
     // Format currency (BRL Standard: 1.000,00)
     const formatMoney = (val) => {
         const numericVal = parseBRL(val);
-        return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 20 }).format(numericVal);
+        return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 2 }).format(numericVal);
     };
 
     // Format discount: remove decimals and add %
@@ -49,6 +52,12 @@ export default function AdCard({ data }) {
                     if (data.images && data.images.length > 0) {
                         setImages(data.images);
                     }
+                    // Update dynamic data if available
+                    setDynamicData({
+                        price: data.price, // might be null
+                        privateArea: data.privateArea,
+                        landArea: data.landArea
+                    });
                 })
                 .catch(err => console.error("Failed to fetch preview", err))
                 .finally(() => setLoadingImages(false));
@@ -94,6 +103,16 @@ export default function AdCard({ data }) {
                     <span className={styles.discountBadge}>{formatDiscount(discount)} OFF</span>
                 </div>
                 <p className={styles.address}>{address}</p>
+
+                {/* Dynamic Areas Display */}
+                <div style={{ display: 'flex', gap: '10px', fontSize: '0.85rem', color: '#555', marginBottom: '8px' }}>
+                    {dynamicData?.privateArea && (
+                        <span><strong>AP:</strong> {dynamicData.privateArea}</span>
+                    )}
+                    {dynamicData?.landArea && (
+                        <span><strong>AT:</strong> {dynamicData.landArea}</span>
+                    )}
+                </div>
 
                 <div className={styles.prices}>
                     <div className={styles.priceItem}>
